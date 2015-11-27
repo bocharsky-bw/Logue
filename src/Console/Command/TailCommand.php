@@ -61,6 +61,11 @@ class TailCommand extends Command
                 $lineOffset = 0 < $lineOffset ? $lineOffset : 0;
             }
 
+            // Print headers:
+            if ($isFirstLoop) {
+                $output->writeln("<options=bold>#\tLine\tString</>");
+            }
+
             // Output new lines only
 //            for ($i = $lineOffset; $i < $countLines; $i++) {
 //                $output->writeln($lines[$i]);
@@ -72,7 +77,13 @@ class TailCommand extends Command
                 if ($i++ < $lineOffset) {
                     continue;
                 }
-                $output->write($i . '. ');
+                // filtering
+                if (false === strpos($line, 'Line5')) {
+                    continue;
+                }
+//                $output->writeln($i.'. '.$line);
+                $columns = explode(' ', $i.'. '.$line);
+                $line = implode("\t", $columns);
                 $output->writeln($line);
             }
             unset($line);
