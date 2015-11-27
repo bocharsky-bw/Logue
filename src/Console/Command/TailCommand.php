@@ -72,6 +72,7 @@ class TailCommand extends Command
                 if ($i++ < $lineOffset) {
                     continue;
                 }
+                $output->write($i . '. ');
                 $output->writeln($line);
             }
             unset($line);
